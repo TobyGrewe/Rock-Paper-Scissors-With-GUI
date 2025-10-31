@@ -1,0 +1,22 @@
+body{
+    background: #e8d7c3;
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            #d4a574 0px,
+            #d4a574 20px,
+            #c89865 20px,
+            #c89865 40px
+        );
+    font-family: 'Courier New', monospace;
+
+
+
+    /* Ceenter content */
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px;
+}
+
