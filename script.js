@@ -1,67 +1,108 @@
+// =======================
+// Game State Variables
+// =======================
+let humanScore = 0;
+let computerScore = 0;
+let round = 1;
+const maxRounds = 5;
 
-function playGame(){
-    //
-        let humanScore = 0; // player's score
-        let computerScore = 0; // computer's score
+// =======================
+// DOM Elements
+// =======================
+const humanScoreEl = document.getElementById("humanScore");
+const computerScoreEl = document.getElementById("computerScore");
+const roundInfoEl = document.getElementById("roundInfo");
+const resultEl = document.getElementById("result");
+const resultTextEl = resultEl.querySelector(".result-text");
 
-// Computer Choice
-function getComputerChoice(){
-    const n = Math.floor(Math.random() * 3); // 0, 1, or 2
-    if (n === 0) return "rock";
-    if (n === 1) return "paper";
-    return "scissors";
+// Create Game Over container dynamically
+const container = document.querySelector(".container");
+let gameOverEl = null;
+
+// =======================
+// Functions
+// =======================
+function getComputerChoice() {
+    const choices = ["rock", "paper", "scissors"];
+    const n = Math.floor(Math.random() * 3);
+    return choices[n];
 }
 
+function playRound(humanChoice) {
+    const computerChoice = getComputerChoice();
+    let resultMessage = "";
 
-// Human Choice
-function getHumanChoice(){
-    const choice = prompt("Enter rock, paper, or scissors:");
-    return choice.toLowerCase(); //keep return output standard
+    if (humanChoice === computerChoice) {
+        resultMessage = `It's a tie! You both chose ${humanChoice}.`;
+    } else if (
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissors" && computerChoice === "paper")
+    ) {
+        resultMessage = `You win! ${humanChoice} beats ${computerChoice}.`;
+        humanScore++;
+    } else {
+        resultMessage = `You lose! ${computerChoice} beats ${humanChoice}.`;
+        computerScore++;
+    }
+
+    // Update DOM
+    humanScoreEl.textContent = humanScore;
+    computerScoreEl.textContent = computerScore;
+    roundInfoEl.textContent = `Round ${round} of ${maxRounds}`;
+    resultTextEl.textContent = resultMessage;
+
+    round++;
+
+    if (round > maxRounds) {
+        endGame();
+    }
 }
 
-//score keeper
-function playRound(humanChoice, computerChoice) {
-        humanChoice = humanChoice.toLowerCase();
+function endGame() {
+    // Hide choices
+    document.querySelector(".choices").classList.add("hidden");
 
-if (humanChoice === computerChoice){
-    console.log(`It's a tie! You both chose ${humanChoice}.`)
+    // Create Game Over message
+    gameOverEl = document.createElement("div");
+    gameOverEl.classList.add("game-over");
+
+    let winnerMessage = "";
+    if (humanScore > computerScore) winnerMessage = "You won the game!";
+    else if (computerScore > humanScore) winnerMessage = "You lost the game!";
+    else winnerMessage = "It's a tie!";
+
+    gameOverEl.innerHTML = `
+        <h2>Game Over</h2>
+        <p>${winnerMessage}<br>Final Score: You ${humanScore} - Computer ${computerScore}</p>
+        <button class="restart-btn">Play Again</button>
+    `;
+
+    container.appendChild(gameOverEl);
+
+    // Add restart button event
+    document.querySelector(".restart-btn").addEventListener("click", restartGame);
 }
 
-else if (
-(humanChoice === "rock" && computerChoice === "scissors") ||
-(humanChoice === "paper" && computerChoice === "rock") ||
-(humanChoice === "scissors" && computerChoice === "paper") 
-)
-{
-    console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-    humanScore++;
-}
-else {
-    console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-    computerScore ++;
-}
+function restartGame() {
+    humanScore = 0;
+    computerScore = 0;
+    round = 1;
 
-console.log(`Score - You: ${humanScore} | Computer: ${computerScore}`);
+    humanScoreEl.textContent = humanScore;
+    computerScoreEl.textContent = computerScore;
+    roundInfoEl.textContent = `Round ${round} of ${maxRounds}`;
+    resultTextEl.textContent = "Choose your move";
 
+    document.querySelector(".choices").classList.remove("hidden");
+    gameOverEl.remove();
+    gameOverEl = null;
 }
 
-
-//play 5 rounds
-for (let i = 1; i <= 5; i++) {
-    console.log(`\n--- Round ${i} ---`);
-    playRound(getHumanChoice(), getComputerChoice());
-}
-
-//Declare winner of game
-
-console.log("\n=== Game Over ====");
-if (humanScore > computerScore){
-    console.log(`You won the game! Final score: You ${humanScore} - Computer ${computerScore}`);
-
-} else if (computerScore > humanScore) {
-console.log(`You lost the game! Final score: You ${humanScore} - Computer ${computerScore}`);
-
-} else {
-    console.log(`It's a tie! Final score: You ${humanScore} - Computer ${computerScore}`);
-}
-}
+// =======================
+// Event Listeners
+// =======================
+const buttons = document.querySelectorAll(".choice-btn");
+buttons.forEach(button => {
+    button.addEventListener("click", () => playRound(button.textContent.toLowerCase()));
+});

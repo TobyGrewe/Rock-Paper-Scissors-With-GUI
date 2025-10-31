@@ -147,21 +147,21 @@ h1 {
     margin-bottom: 15px;
     color: #4a3728;
     letter-spacing: 2px;
-    text-shadows: 1px 1px 0px rgba(255, 255, 255, 0.5);
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
 }
 
 .game-over p{
-    font-size: 1.2 em;
+    font-size: 1.2em;
     color:#4a3728;
     letter-spacing: 1px;
 }
 
 .restart-btn {
     background: rgba(255, 255, 255, 0.8);
-    border: 3px solid #4a728;
+    border: 3px solid #4a3728;
     color: #4a3728;
     padding: 15px 40px;
-    font-size: 1.2 em;
+    font-size: 1.2em;
     font-family: 'Courier New', monospace;
     cursor: pointer;
     font-weight:bold;
@@ -183,7 +183,7 @@ h1 {
 
 .restart-btn:active {
     transform: translateY(0px);
-    box-shadows: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 
 }
 
@@ -191,3 +191,19 @@ h1 {
     display:none;
 }
 
+@media (max-width: 500px) {
+    .choice-btn {
+        width: 100px;
+        height: 70px;
+        font-size: 1em;
+    }
+    .score-value {
+        font-size: 2em;
+    }
+}
+
+
+.choice-btn:focus, .restart-btn:focus {
+    outline: 2px solid #4a3728;
+    outline-offset: 3px;
+}
