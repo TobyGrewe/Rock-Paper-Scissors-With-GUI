@@ -156,3 +156,38 @@ h1 {
     letter-spacing: 1px;
 }
 
+.restart-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 3px solid #4a728;
+    color: #4a3728;
+    padding: 15px 40px;
+    font-size: 1.2 em;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    font-weight:bold;
+    letter-spacing: 2px;
+    transition: all 0.15s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    display: block;
+    margin: 20px auto 0;
+
+}
+
+
+.restart-btn:hover {
+    background: rgba(212, 165, 116, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+.restart-btn:active {
+    transform: translateY(0px);
+    box-shadows: 1px 1px 3px rgba(0, 0, 0, 0.2);
+
+}
+
+.hidden{
+    display:none;
+}
+
