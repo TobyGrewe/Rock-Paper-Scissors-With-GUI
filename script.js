@@ -63,37 +63,72 @@ function playRound(humanChoice, buttonElement) {
     
     // Play click sound
     playSound('click');
+
+    //DISABLE all buttons so they can't click during the delay
+    allButtons.forEach(btn => btn.disabled = true);
     
     const computerChoice = getComputerChoice();
-    let resultMessage = "";
+ 
     
+    // Shows what each player chose 
+    resultTextEl.textContent = `You chose ${humanChoice} ... Computer chose ${computerChoice} ...`;
+    resultEl.className = `result`; //Reset any win/lose classes
+
+
+//Delay before showing result
+    setTimeout(() => {
+        let resultMessage ="";
+        let resultClass = "";
+
+
+
+
+
     if (humanChoice === computerChoice) {
         resultMessage = `It's a tie! You both chose ${humanChoice}.`;
+        resultClass = "tie";
         playSound('tie');
+
     } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper")
     ) {
         resultMessage = `You win! ${humanChoice} beats ${computerChoice}.`;
+        resultClass = "win";
         humanScore++;
         playSound('win');
     } else {
         resultMessage = `You lose! ${computerChoice} beats ${humanChoice}.`;
+        resultClass = "lose";
         computerScore++;
         playSound('lose');
     }
-    
-    // Update DOM
+
+
+
+
+    //UPDATE scores and show result
     humanScoreEl.textContent = humanScore;
     computerScoreEl.textContent = computerScore;
     roundInfoEl.textContent = `Round ${round} of ${maxRounds}`;
     resultTextEl.textContent = resultMessage;
     
+    //Apply the win/lose/tie styling
+    resultEl.className = `result ${resultClass}`;
+
+
+
+    //REMOVE selected state and re-enable buttons
+    buttonElement.classList.remove('selected');
+    allButtons.forEach(btn => btn.disabled = false);
+
+
     round++;
     if (round > maxRounds) {
         endGame();
     }
+    }, 1500);
 }
 
 function endGame() {
