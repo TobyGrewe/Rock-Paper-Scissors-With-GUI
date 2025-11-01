@@ -218,3 +218,9 @@
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.1);
 }
+
+
+.choice-btn.selected {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #6aea66 0%, #4ba265 100%);
+}

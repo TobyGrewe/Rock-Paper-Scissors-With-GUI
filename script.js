@@ -53,7 +53,14 @@ function getComputerChoice() {
     return choices[n];
 }
 
-function playRound(humanChoice) {
+function playRound(humanChoice, buttonElement) {
+    // Remove 'selected' class from ALL buttons first
+    const allButtons = document.querySelectorAll('.choice-btn');
+    allButtons.forEach(btn => btn.classList.remove('selected'));
+    
+    // Add visual feedback to the clicked button
+    buttonElement.classList.add('selected');
+    
     // Play click sound
     playSound('click');
     
@@ -146,7 +153,7 @@ function toggleMute() {
 // =======================
 const buttons = document.querySelectorAll(".choice-btn");
 buttons.forEach(button => {
-    button.addEventListener("click", () => playRound(button.textContent.toLowerCase()));
+    button.addEventListener("click", () => playRound(button.textContent.toLowerCase(), button));
 });
 
 // Mute button event listener
