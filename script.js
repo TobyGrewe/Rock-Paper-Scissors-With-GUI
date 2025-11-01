@@ -80,10 +80,6 @@ function playRound(humanChoice, buttonElement) {
         let resultMessage ="";
         let resultClass = "";
 
-
-
-
-
     if (humanChoice === computerChoice) {
         resultMessage = `It's a tie! You both chose ${humanChoice}.`;
         resultClass = "tie";
